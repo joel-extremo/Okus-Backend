@@ -1,0 +1,39 @@
+{
+    "name": "omarelgabry/lumen-api-oauth",
+    "description": "A RESTful API based on Lumen micro-framework with OAuth2.",
+    "keywords": ["lumen", "rest", "api", "oauth", "authentication", "authorization"],
+    "homepage": "https://github.com/OmarElGabry/lumen-api-oauth",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/lumen-framework": "5.4.*",
+        "vlucas/phpdotenv": "~2.2",
+        "laravel/homestead": "^5.0",
+        "lucadegasperi/oauth2-server-laravel": "^5.2"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "~5.0",
+        "mockery/mockery": "~0.9",
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "database/"
+        ]
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
