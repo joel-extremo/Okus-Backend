@@ -26,5 +26,15 @@ class BaseModel extends Model{
     {
         return true;
     }
+    
+    public static function getMinutesBetweenTwoDates($startDate, $endDate){
+        
+        $to_time = strtotime($startDate);
+        $from_time = strtotime($endDate);
+        $minutes = round(abs($to_time - $from_time) / 60,2);
+        
+        return $minutes;
+        
+    }
 
 }

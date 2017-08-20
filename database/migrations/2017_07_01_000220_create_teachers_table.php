@@ -17,7 +17,6 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->integer('status_id')->unsigned();
-            $table->string('username')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('email');

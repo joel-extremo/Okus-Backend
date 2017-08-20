@@ -56,6 +56,7 @@ class GradeSectionSubject extends Model{
 
     static function getHomeworks($gradeSectionSubjectId){
 
+
         return Homework::leftJoin('Topics', 'Homeworks.topic_id', '=', 'Topics.id')
                 ->leftJoin('Subtopics', 'Homeworks.subtopic_id', '=', 'Subtopics.id')
                 ->where("grade_section_subject_id", "=", $gradeSectionSubjectId)
@@ -65,7 +66,7 @@ class GradeSectionSubject extends Model{
                         Topics.name AS topic_name,
                         Homeworks.expiration_date
                     ")
-                ->where("Homeworks.expiration_date", ">", date("Y-m-d 23:59:59"))
+                ->where("Homeworks.expiration_date", ">=", date("Y-m-d 00:00:00"))
                 ->get()->toArray();
 
     }

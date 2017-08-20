@@ -16,9 +16,13 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
+
+/*************STUDENTS*************/
+
+
 /**
  * @api {get} /students get all student
- * @apiName getAllStudent
+ * @apiName getStudents
  * @apiGroup Student
  */
 $app->get('/students','StudentController@index');
@@ -45,11 +49,15 @@ $app->put('/students/{student_id}', 'StudentController@update');
 $app->delete('/students/{student_id}', 'StudentController@destroy');
 
 /**
- * @api {post} /email_verification verify is email in the system
- * @apiName emailInSystemVerification
- * @apiGroup Users
+ * @api {post} /student/registration create student
+ * @apiName create
+ * @apiGroup Student
  */
-$app->post('/email_verification','UserController@emailInSystemVerification');
+$app->post('/student/registration','StudentController@store');
+
+
+/*************USERS*************/
+
 
 /**
  * @api {post} /login login
@@ -59,18 +67,85 @@ $app->post('/email_verification','UserController@emailInSystemVerification');
 $app->post('/login','UserController@login');
 
 /**
- * @api {post} /registration/student create student
- * @apiName create
- * @apiGroup Student
+ * @api {post} /email_verification verify is email in the system
+ * @apiName emailInSystemVerification
+ * @apiGroup Users
  */
-$app->post('/registration/student','StudentController@store');
+$app->post('/email/verification','UserController@emailInSystemVerification');
+
+
+/*************TEACHERS*************/
+
 
 /**
- * @api {post} /registration/teacher create teacher
+ * @api {post} /teacher/registration create teacher
  * @apiName create
  * @apiGroup Teacher
  */
-$app->post('/registration/teacher','TeacherController@store');
+$app->post('/teacher/registration','TeacherController@store');
+
+
+/*************HOMEWORKS*************/
+
+
+/**
+ * @api {post} /initData/homework_creator Get the data that initializa homework creator view
+ * @apiName getInitDatahomework
+ * @apiGroup Homeworks
+ */
+$app->get('/initData/homework_creator','HomeworkController@getInitDataHomeworkCreator');
+
+/**
+ * @api {get} /subtopic/:subtopic_id/blocks Get blocks of a subtopic
+ * @apiName getSubtopicBlocks
+ * @apiGroup Homeworks
+ */
+$app->get('/subtopic/{subtopic_id}/blocks','HomeworkController@getSubtopicBlocks');
+
+/**
+ * @api {get} /teacher/:teacher_id/homeworks/pending Get all pending homework of a teacher
+ * @apiName getTeacherPendingHomework
+ * @apiGroup Homework
+ */
+$app->get('/teacher/{teacher_id}/homeworks/pending','HomeworkController@getTeacherPendingHomework');
+
+/**
+ * @api {get} /student/{student_id}/homeworks/pending Oauth2 token
+ * @apiName token
+ * @apiGroup Oauth2
+ */
+$app->get('/student/{student_id}/homeworks/pending','HomeworkController@getStudentPendingHomework');
+
+/**
+ * @api {get} /homework/{homework_id}/blocks Get all blocks of a homework
+ * @apiName token
+ * @apiGroup Homework
+ */
+$app->get('/homework/{homework_id}/blocks','HomeworkController@getHomeworkBlocks');
+
+/**
+ * @api {post} /student/:student_id/homework/block/:homework_block_id Get block data to play the game
+ * @apiName getBlock
+ * @apiGroup Homework
+ */
+$app->get('/student/{student_id}/homework/block/{homework_block_id}','HomeworkController@getBlock');
+
+/**
+ * @api {post} /homework/block/submit/:student_block_id Process block data 
+ * @apiName homeworkBlockSubmit
+ * @apiGroup Homework
+ */
+$app->post('/homework/block/submit/{student_block_id}','HomeworkController@homeworkBlockSubmit');
+
+/**
+ * @api {post} /create_homework create homework
+ * @apiName createHomework
+ * @apiGroup Homework
+ */
+$app->post('/create_homework','HomeworkController@store');
+
+
+/*************OAUTH2*************/
 
 
 /**
@@ -82,56 +157,4 @@ $app->post('/oauth/access_token', function() use ($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
 });
 
-/*********homework creator***********/
 
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->get('/initData/homework_creator','HomeworkController@getInitDataHomeworkCreator');
-
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->get('/subtopic/{subtopic_id}/blocks','HomeworkController@getBlocks');
-
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->get('/teacher/{teacher_id}/homeworks/pending','HomeworkController@getTeacherPendingHomework');
-
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->get('/student/{student_id}/homeworks/pending','HomeworkController@getStudentPendingHomework');
-
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->get('/homework/{homework_id}/blocks','HomeworkController@getHomeworkBlocks');
-
-
-/**
- * @api {post} /oauth/access_token Oauth2 token
- * @apiName token
- * @apiGroup Oauth2
- */
-$app->post('/create_homework','HomeworkController@store');
-
-/*************TEST*************/
-$app->get('/student/homeworks','TestController@getHomeworkStudent');
-
-$app->get('/teacher/homeworks','TestController@getHomeworkTeacher');
-
-$app->post('/create/homework','TestController@createHomework');
-
-$app->get('/homework/{id}','TestController@getHomework');

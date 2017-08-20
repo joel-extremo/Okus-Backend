@@ -23,7 +23,6 @@ class Student extends Model implements AuthenticatableContract, AuthorizableCont
     protected $fillable = [
         'code',
         'status_id',
-        'username',
         'firstname',
         'lastname',
         'email',
@@ -67,7 +66,6 @@ class Student extends Model implements AuthenticatableContract, AuthorizableCont
      * @param  string $email
      * @param  string $password
      * @return int|boolean
-     * @see    https://github.com/lucadegasperi/oauth2-server-laravel/blob/master/docs/authorization-server/password.md
      */
     static function verifyCredentials($email, $password){
 
@@ -97,7 +95,7 @@ class Student extends Model implements AuthenticatableContract, AuthorizableCont
 
         $student = Student::where('email', $email)
                         ->select('id as user_id', 'status_id as user_status_id',
-                            'username','firstname', 'lastname', 'grade_section_id',
+                             'firstname', 'lastname', 'grade_section_id',
                                   'password')
                                         ->first();
 

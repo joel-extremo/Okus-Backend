@@ -32,7 +32,6 @@ class Teacher extends Model implements AuthenticatableContract, AuthorizableCont
     protected $fillable = [
         'code', 
         'status_id', 
-        'username', 
         'firstname',
         'lastname',
         'email',
@@ -63,7 +62,6 @@ class Teacher extends Model implements AuthenticatableContract, AuthorizableCont
             ->selectRaw('
                 Teachers.id as user_id,
                 Teachers.status_id as user_status_id,
-                Teachers.username,
                 Teachers.firstname,
                 Teachers.lastname,
                 Teachers.password,
@@ -89,7 +87,6 @@ class Teacher extends Model implements AuthenticatableContract, AuthorizableCont
             ->selectRaw('
                 Teachers.id as user_id,
                 Teachers.status_id as user_status_id,
-                Teachers.username,
                 Teachers.firstname,
                 Teachers.lastname,
                 ifnull(count(Grades_Section_Subjects.id), 0)as total_grade_section_subject')

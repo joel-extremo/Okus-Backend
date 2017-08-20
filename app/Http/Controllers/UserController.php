@@ -22,6 +22,7 @@ class UserController extends Controller{
 				'directLogin'
 				]
 			]);
+			
 	}
 
 	public function emailInSystemVerification(Request $request){
@@ -55,12 +56,12 @@ class UserController extends Controller{
 	public function login(Request $request){
 
 		//validate incomming data
-		$this->validate($request, ['email' => 'required|email']);
+		$this->validate($request, ['username' => 'required|email']);
 
 		if($request->is_standard_login){
 
 			$userData = $this->standardLogin($request);
-
+			
 		}else{
 
 			$userData = $this->socialNetworkLogin($request);
@@ -73,6 +74,7 @@ class UserController extends Controller{
 				"access_token" => app("oauth2-server.authorizer")->issueAccessToken()["access_token"],
 				"user_data" => $userData
 			];
+			
 
 			return response()->json($result, 200);
 
@@ -88,11 +90,11 @@ class UserController extends Controller{
 
 		if($request->user_type_id == 1){
 
-			$userData = Student::login($request->email, $request->password);
+			$userData = Student::login($request->username, $request->password);
 
 		}elseif($request->user_type_id == 2){
 
-			$userData = Teacher::login($request->email, $request->password);
+			$userData = Teacher::login($request->username, $request->password);
 
 		}else{
 
@@ -109,7 +111,7 @@ class UserController extends Controller{
 		if($request->user_type_id == 1){
 
 			$userData = Student::where('email', '=', $request->email)
-							->select('id as user_id', 'status_id as user_status_id', 'username',
+							->select('id as user_id', 'status_id as user_status_id',
 								'firstname', 'lastname', 'grade_section_id')->get();
 
 		}elseif($request->user_type_id == 2){
