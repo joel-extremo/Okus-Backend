@@ -19,7 +19,6 @@ $app->get('/', function () use ($app) {
 
 /*************STUDENTS*************/
 
-
 /**
  * @api {get} /students get all student
  * @apiName getStudents
